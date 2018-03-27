@@ -1,0 +1,49 @@
+#!/bin/bash
+
+echo "Initializing setup..."
+
+cd /var/www/project/magento
+
+if [ -f ./app/etc/config.php ] || [ -f ./app/etc/env.php ]; then
+  echo "It appears Magento is already installed (app/etc/config.php or app/etc/env.php exist). Exiting setup..."
+  exit
+fi
+chown -R www-data:www-data /var/www/project/
+cd /var/www/project/
+sudo -uwww-data composer create-project --no-install --repository-url=https://repo.magento.com/ magento/project-community-edition /var/www/project/tmp
+echo "copy composer.json"
+cp -R /var/www/project/tmp/* /var/www/project/magento/
+rm -Rf /var/www/project/tmp/
+cd /var/www/project/magento
+
+echo "Download magento"
+sudo -uwww-data /usr/local/bin/composer install
+
+chmod +x ./bin/magento
+
+echo "Running Magento 2 setup script..."
+sudo -uwww-data /usr/local/bin/php ./bin/magento setup:install \
+  --db-host=db-host \
+  --db-name=$MYSQL_DATABASE \
+  --db-user=$MYSQL_USER \
+  --db-password=$MYSQL_PASS \
+  --base-url=$M2SETUP_BASE_URL \
+  --admin-firstname=$M2SETUP_ADMIN_FIRSTNAME \
+  --admin-lastname=$M2SETUP_ADMIN_LASTNAME \
+  --admin-email=$M2SETUP_ADMIN_EMAIL \
+  --admin-user=$M2SETUP_ADMIN_USER \
+  --admin-password=$M2SETUP_ADMIN_PASSWORD \
+  --backend-frontname=admin \
+  --http-cache-hosts=varnish:80 \
+  --magento-init-params="MAGE_MODE=developer" \
+  --language=$M2SETUP_LANGUAGE \
+  --currency=$M2SETUP_CURRENCY \
+  --timezone=$M2SETUP_TIMEZONE
+
+sudo -uwww-data php bin/magento deploy:mode:set developer
+
+echo "REPLACE INTO core_config_data (path, value) VALUES ('design/theme/theme_id', 1)" | mysql -uroot -proot $MYSQL_DATABASE -hdb-host
+
+sudo -uwww-data php bin/magento ca:cl
+
+echo "The setup script has completed execution."

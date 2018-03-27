@@ -1,0 +1,12 @@
+#!/bin/bash
+
+chown -R www-data:www-data /var/www/project
+
+#install magento
+/usr/local/bin/mage-setup
+
+# Start the cron service
+/usr/sbin/cron
+
+# Start the php-fpm service
+/usr/local/sbin/php-fpm
