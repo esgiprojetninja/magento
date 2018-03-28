@@ -235,5 +235,6 @@ mg module:status
 mg module:enable Esgi_Helloworld
 # persiste la data en base
 mg setup:up
+mg c:f
 ```
 #### Premier controller
