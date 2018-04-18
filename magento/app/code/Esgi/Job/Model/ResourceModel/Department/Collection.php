@@ -1,21 +1,30 @@
 <?php
-namespace Esgi\Job\Model\ResourceModel\Department;
 
-use \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+namespace Tinwork\Job\Model\ResourceModel\Department;
 
+use Tinwork\Job\Api\Data\DepartmentInterface;
+use Tinwork\Job\Model\Department;
+use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+
+/**
+ * Class Collection
+ *
+ * @package     Tinwork\Job\Model\ResourceModel\Department
+ * @copyright   Copyright (c) 2018 Slabprea
+ */
 class Collection extends AbstractCollection
 {
 
-    protected $_idFieldName = 'entity_id';
+    /**
+     * @var string $_idFieldName
+     */
+    protected $_idFieldName = DepartmentInterface::ID;
 
     /**
-     * Define resource model
      *
-     * @return void
      */
     protected function _construct()
     {
-        $this->_init('Esgi\Job\Model\Department', 'Esgi\Job\Model\ResourceModel\Department');
+        $this->_init('\Tinwork\Job\Model\Department', '\Tinwork\Job\Model\ResourceModel\Department');
     }
-
 }

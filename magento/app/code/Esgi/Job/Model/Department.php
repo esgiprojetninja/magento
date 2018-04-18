@@ -1,16 +1,23 @@
 <?php
-namespace Esgi\Job\Model;
 
-use Esgi\Job\Api\Data\DepartmentInterface;
+namespace Tinwork\Job\Model;
+
+use Tinwork\Job\Api\Data\DepartmentInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\DataObject\IdentityInterface;
 
+/**
+ * Class Department
+ *
+ * @package     Tinwork\Job\Model
+ * @copyright   Copyright (c) 2018 Slabprea
+ */
 class Department extends AbstractModel implements DepartmentInterface, IdentityInterface
 {
     /**
-     * Esgi Job department cache tag
+     * Tinwork Job department cache tag
      */
-    const CACHE_TAG = 'esgi_job_d';
+    const CACHE_TAG = 'tinwork_job_d';
 
     /**#@-*/
     protected $_cacheTag = self::CACHE_TAG;
@@ -20,7 +27,7 @@ class Department extends AbstractModel implements DepartmentInterface, IdentityI
      *
      * @var string
      */
-    protected $_eventPrefix = 'esgi_job';
+    protected $_eventPrefix = 'tinwork_job';
 
     /**
      * Parameter name in event
@@ -43,7 +50,7 @@ class Department extends AbstractModel implements DepartmentInterface, IdentityI
      */
     protected function _construct()
     {
-        $this->_init(\Esgi\Job\Model\ResourceModel\Department::class);
+        $this->_init(\Tinwork\Job\Model\ResourceModel\Department::class);
     }
 
     /**

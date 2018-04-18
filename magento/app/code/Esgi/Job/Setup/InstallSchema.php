@@ -1,13 +1,16 @@
 <?php
 
-namespace Esgi\Job\Setup;
+namespace Tinwork\Job\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 
 /**
- * @codeCoverageIgnore
+ * Class InstallSchema
+ *
+ * @package     Tinwork\Job\Setup
+ * @copyright   Copyright (c) 2018 Slabprea
  */
 class InstallSchema implements InstallSchemaInterface
 {
@@ -18,14 +21,13 @@ class InstallSchema implements InstallSchemaInterface
     public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
-
         $installer->startSetup();
 
         /**
-         * Create table 'esgi_job_department'
+         * Create table 'tinwork_job_department'
          */
         $table = $installer->getConnection()->newTable(
-            $installer->getTable('esgi_job_department')
+            $installer->getTable('tinwork_job_department')
         )->addColumn(
             'entity_id',
             \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
@@ -45,9 +47,9 @@ class InstallSchema implements InstallSchemaInterface
             [],
             'Department Description'
         )->setComment(
-            'Department management for Esgi Job module'
+            'Department management for Tinwork Job module'
         );
-        
+
         $installer->getConnection()->createTable($table);
         $installer->endSetup();
     }
