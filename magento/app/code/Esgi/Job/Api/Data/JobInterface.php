@@ -1,9 +1,12 @@
 <?php
-namespace Esgi\Job\Api\Data;
+
+namespace Tinwork\Job\Api\Data;
 
 /**
- * Esgi job interface.
- * @api
+ * Class JobInterface
+ *
+ * @package     Tinwork\Job\Api\Data
+ * @copyright   Copyright (c) 2018 Slabprea
  */
 interface JobInterface
 {

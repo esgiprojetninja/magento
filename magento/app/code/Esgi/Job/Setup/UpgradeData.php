@@ -1,15 +1,20 @@
 <?php
-namespace Esgi\Job\Setup;
 
-use Esgi\Job\Model\Job;
-use Esgi\Job\Model\Department;
+namespace Tinwork\Job\Setup;
+
 use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 
+use Tinwork\Job\Model\Department;
+use Tinwork\Job\Model\Job;
+
 /**
- * @codeCoverageIgnore
- */
+ * Class UpgradeData
+ *
+ * @package     Tinwork\Job\Setup
+ * @copyright   Copyright (c) 2018 Slabprea
+ */
 class UpgradeData implements UpgradeDataInterface
 {
     /** @var  Job */
@@ -23,14 +28,16 @@ class UpgradeData implements UpgradeDataInterface
 
     /**
      * UpgradeData constructor.
+     *
      * @param Job $job
      * @param Department $department
      */
-    public function __construct(
+    public function __construct
+    (
         Job $job,
         Department $department
     ){
-        $this->_job        = $job;
+        $this->_job = $job;
         $this->_department = $department;
     }
 
@@ -39,7 +46,7 @@ class UpgradeData implements UpgradeDataInterface
         $installer = $setup;
         $installer->startSetup();
 
-        if (version_compare($context->getVersion(), '1.2.0') < 0) {
+        if (version_compare($context->getVersion(), '1.3.0') < 0) {
             $this->addDepartments($setup);
             $this->addJobs($setup);
         }

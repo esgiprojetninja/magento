@@ -1,9 +1,12 @@
 <?php
-namespace Esgi\Job\Api\Data;
+
+namespace Tinwork\Job\Api\Data;
 
 /**
- * Esgi department interface.
- * @api
+ * Class DepartmentInterface
+ *
+ * @package     Tinwork\Job\Api\Data
+ * @copyright   Copyright (c) 2018 Slabprea
  */
 interface DepartmentInterface
 {

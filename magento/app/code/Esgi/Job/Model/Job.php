@@ -1,16 +1,23 @@
 <?php
-namespace Esgi\Job\Model;
 
-use Esgi\Job\Api\Data\JobInterface;
+namespace Tinwork\Job\Model;
+
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\DataObject\IdentityInterface;
+use Tinwork\Job\Api\Data\JobInterface;
 
+/**
+ * Class Job
+ *
+ * @package     Tinwork\Job\Model
+ * @copyright   Copyright (c) 2018 Slabprea
+ */
 class Job extends AbstractModel implements JobInterface, IdentityInterface
 {
     /**
-     * Esgi Job department cache tag
+     * Tinwork Job department cache tag
      */
-    const CACHE_TAG = 'esgi_job_j';
+    const CACHE_TAG = 'tinwork_job_j';
 
     /**#@+
      * Job's statuses
@@ -26,7 +33,7 @@ class Job extends AbstractModel implements JobInterface, IdentityInterface
      *
      * @var string
      */
-    protected $_eventPrefix = 'esgi_job';
+    protected $_eventPrefix = 'tinwork_job';
 
     /**
      * Parameter name in event
@@ -49,7 +56,7 @@ class Job extends AbstractModel implements JobInterface, IdentityInterface
      */
     protected function _construct()
     {
-        $this->_init(\Esgi\Job\Model\ResourceModel\Job::class);
+        $this->_init(\Tinwork\Job\Model\ResourceModel\Job::class);
     }
 
     /**
