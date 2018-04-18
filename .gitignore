@@ -134,7 +134,5 @@ magento/php.ini.sample
 !/magento/app/code
 !magento/app/design
 !/magento/app/design
-!/magento/app/etc/config.php
-!magento/app/etc/config.php
-!/magento/app/etc/env.dev.php
-!magento/app/etc/env.dev.php
+magento/app/etc/env.php
+magento/app/etc/config.php
