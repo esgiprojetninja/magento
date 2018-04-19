@@ -3,19 +3,24 @@ namespace Esgi\Ninja\Controller\Stores;
 
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Exception\NotFoundException;
+use Esgi\Ninja\Api\NinjaStoreRepositoryInterface;
+use Esgi\Ninja\Model\ResourceModel\NinjaStore\Collection;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
 	protected $_jsonFactory;
 	protected $_http;
+    protected $_collection;
 
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
-        Http $http)
+        Http $http,
+        Collection $collection)
 	{
 		$this->_jsonFactory = $jsonFactory;
 		$this->_http = $http;
+		$this->_collection = $collection;
 		return parent::__construct($context);
 	}
 
@@ -25,15 +30,18 @@ class Index extends \Magento\Framework\App\Action\Action
             throw new NotFoundException(__("Ajax only homz"));
         }
         $stores = [];
-        for ($i = 0; $i < 4; $i++) {
+        foreach($this->_collection->getItems() as $ninjaStore) {
             $stores[]= [
-                "name" => "store"+$i,
-                "lat" => $i,
-                "lon" => $i,
-                "description" => "I was the poulay you know, like POULAY man. POULAY"
-
+                "name" => $ninjaStore->getName(),
+                "lat" => $ninjaStore->getLat(),
+                "lng" => $ninjaStore->getLng(),
+                "description" => $ninjaStore->getContent(),
+                "url" => $ninjaStore->getLink()
             ];
         }
-        return $this->_jsonFactory->create()->setData($stores);
+        return $this->_jsonFactory->create()->setData([
+            "success" => true,
+            "data" => $stores
+        ]);
 	}
 }

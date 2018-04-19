@@ -3,7 +3,9 @@
  * @var \Esgi\Ninja\Block\Index $block
  */
 ?>
+<input id="ninja-url" type="hidden" value="<?= $block->getUrl("ninja/stores"); ?>" />
 <h2>The stores around you</h2>
+<p id="stores-error"></p>
 <div id="map" class="loading">
     <div id="loader" class="loader"></div>
 </div>
@@ -13,6 +15,10 @@
         width: 100%;
         height: 400px;
         background-color: grey;
+    }
+    #stores-error {
+        color: #7e3131;
+        font-size: small;
     }
     .full-width {
         width: 100%;
@@ -134,11 +140,13 @@
     }
 </script>
 
-<script>
+<script id="custom-ninja-script">
     (function(){
         let mapContainer = null;
+        let errorP = null;
         let loader = null;
         let stores = [];
+        let storesFetched = false;
         const defaultMarkerImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
         let map = null;
         let infoWindow = null;
@@ -204,26 +212,40 @@
             });
         }
 
-        function getStores() {
-            setTimeout(() => {
-                for (let i = 0; i < 4; i++) {
-                    stores.push({
-                        name: `store${i}`,
-                        lat: Math.random()*100 * (Math.random() <= 0.5 ? -1 : 1),
-                        lng: Math.random()*100 * (Math.random() <= 0.5 ? -1 : 1),
-                        description: `I was the ${i} poulay you know, like POULAY man. POULAY`,
-                        image: defaultMarkerImage
-                    });
-                };
+        function storesLoaded(e) {
+            storesFetched = true;
+            console.log("stores loaaaaddded", e);
+            if (e && e.target && e.target.status === 200) {
+                stores = JSON.parse(e.target.response).data.map((store => Object.assign(store, {
+                    lat: Number(store.lat),
+                    lng: Number(store.lng),
+                })));
                 if (window.google && window.google.maps) {
                     loadMap();
                 }
-            }, 1000);
+            } else {
+                storesFail();
+            }
+        }
+
+        function storesFail() {
+            storesFetched = true;
+            errorP.innerHTML = "Error: Couldn't fetch Ninja Stores, take a look at the console";
+            console.log("NinjaStores fetch Error:: ", arguments);
+        }
+
+        function fetchStores(url) {
+            const oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", storesLoaded);
+            oReq.addEventListener("error", storesFail);
+            oReq.open("GET", url, true);
+            oReq.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+            oReq.send(null);
         }
 
         function mapLoadHandler() {
             delete window.mapLoadHandler;
-            if (stores && stores.length) {
+            if (storesFetched) {
                 loadMap();
             }
         }
@@ -238,11 +260,21 @@
 
         function load(){
             window.removeEventListener("DOMContentLoaded", load);
+
+            const scr = document.getElementById("custom-ninja-script");
+            scr.parentNode.removeChild(scr);
+
             mapContainer = document.getElementById("map");
             loader = document.getElementById("loader");
+            errorP = document.getElementById("stores-error");
+
+            const urlEl = document.getElementById("ninja-url");
+            const url = urlEl.value;
+            urlEl.parentNode.removeChild(urlEl);
+            fetchStores(url);
             loadMapScript();
         }
         window.addEventListener("DOMContentLoaded", load);
-        getStores();
+        
     })();
 </script>
