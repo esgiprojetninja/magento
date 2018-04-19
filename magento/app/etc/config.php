@@ -122,6 +122,8 @@ return array (
     'Magento_CatalogWidget' => 1,
     'Dotdigitalgroup_Email' => 1,
     'Magento_WishlistAnalytics' => 1,
+    'Owebia_AdvancedSettingCore' => 1,
+    'Owebia_AdvancedShippingSetting' => 1,
     'Shopial_Facebook' => 1,
     'Temando_Shipping' => 1,
   ),

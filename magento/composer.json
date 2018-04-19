@@ -10,7 +10,8 @@
     "require": {
         "magento/product-community-edition": "2.2.3",
         "composer/composer": "@alpha",
-        "algolia/algoliasearch-magento-2": "^1.6"
+        "algolia/algoliasearch-magento-2": "^1.6",
+        "owebia/magento2-module-advanced-shipping-setting": "^2.1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
