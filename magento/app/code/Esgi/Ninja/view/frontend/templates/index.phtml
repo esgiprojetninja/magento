@@ -1,10 +1,12 @@
 <?php
 /**
- * @var \Mageplaza\HelloWorld\Block\Display $block
+ * @var \Esgi\Ninja\Block\Index $block
  */
 ?>
 <h2>The stores around you</h2>
-<div id="map"></div>
+<div id="map" class="loading">
+    <div id="loader" class="loader"></div>
+</div>
 <div id="stores"></div>
 <style>
     #map {
@@ -12,20 +14,229 @@
         height: 400px;
         background-color: grey;
     }
+    .full-width {
+        width: 100%;
+    }
+    .text-left {
+        text-align: "left";
+    }
+    .display-flex-column {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .infowindow-container {
+        padding: 12px 6px;
+        width: 90%;
+        margin: auto;
+    }
+    .infowindow-container .title {
+        font-size: xx-large;
+        font-weight: 700;
+        border-bottom: 1px solid #1979c3;
+        color: #1979c3;
+        padding-bottom: 5px;
+    }
+    .infowindow-container .description {
+        margin-top: 15px;
+    }
+    .infowindow-container .store-link {
+        margin-top: 10px;
+    }
+    #map.loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-bottom: 1px solid #1979c3;
+    }
+    .loader {
+        color: #1979c3;
+        font-size: 20px;
+        margin: 0;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        position: relative;
+        text-indent: -9999em;
+        -webkit-animation: load4 1.3s infinite linear;
+        animation: load4 1.3s infinite linear;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+@-webkit-keyframes load4 {
+    0%,
+    100% {
+        box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+    }
+    12.5% {
+        box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    25% {
+        box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    37.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    50% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    62.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    }
+    75% {
+        box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+    87.5% {
+        box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    }
+}
+@keyframes load4 {
+    0%,
+    100% {
+        box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+    }
+    12.5% {
+        box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    25% {
+        box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    }
+    37.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    50% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    }
+    62.5% {
+        box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    }
+    75% {
+        box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    }
+    87.5% {
+        box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    }
+}
+
 </style>
 
 <script type="text/x-magento-init">
     {
-        "#stores": {
-            "ninjaStores": {
-                "url": "<?php echo $block->getUrl('ninja/stores') ?>",
-                "map": "#map"
+        "#map": {
+            "storesAjax": {
+                url: "<?php echo $block->getUrl('ninja/stores'); ?>"
             }
         }
     }
 </script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=
-AIzaSyD1cxIBCzncxDL89MUOtgexZR7wetqW-vo
-&callback=initMap">
+<script>
+    (function(){
+        let mapContainer = null;
+        let loader = null;
+        let stores = [];
+        const defaultMarkerImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+        let map = null;
+        let infoWindow = null;
+
+        function generateMarkerInfoWindowContent(store) {
+            return `
+                <div class="infowindow-container display-flex-column">
+                    <h4 class="title full-width text-left">${store.name || "Default title"}</h4>
+                    <p class="description full-width" text-left>${store.description || "Default store description"}</p>
+                    <p class="store-link full-width text-left">
+                        <a href="${store.url || "http://adrastia.org/"}>Store link</a>
+                    </p<
+                </div>
+            `;
+        }
+
+        function loadMap() {
+            mapContainer.className = mapContainer.className.replace("loading", "");
+            loader.parentNode.removeChild(loader);
+            const { lat, lng } = stores[0];
+            map = new google.maps.Map(mapContainer, {
+                zoom: 4,
+                center: { lat, lng }
+            });
+            stores = stores.map(store => {
+                const { lat, lng } = store;
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map,
+                    title: store.name,
+                    label: store.name,
+                    animation: google.maps.Animation.DROP
+                });
+                const clickhandler = () => {
+                    // map.setZoom(8);
+                    map.setCenter(marker.getPosition());
+
+                    if (marker.getAnimation() !== null) {
+                        marker.setAnimation(null);
+                    } else {
+                        marker.setAnimation(google.maps.Animation.BOUNCE);
+                        setTimeout(() => {
+                            marker.setAnimation(null);
+                        }, 1000);
+                    }
+                    if (infoWindow && infoWindow.close) {
+                        infoWindow.close();
+                    }
+                    infoWindow = new google.maps.InfoWindow({
+                        content: generateMarkerInfoWindowContent(store),
+                        position: { lat, lng }
+                    });
+                    infoWindow.open(map);
+
+                };
+                marker.addListener("click", clickhandler);
+                return Object.assign(store, { marker, clickhandler });
+            });
+        }
+
+        function getStores() {
+            setTimeout(() => {
+                for (let i = 0; i < 4; i++) {
+                    stores.push({
+                        name: `store${i}`,
+                        lat: Math.random()*100 * (Math.random() <= 0.5 ? -1 : 1),
+                        lng: Math.random()*100 * (Math.random() <= 0.5 ? -1 : 1),
+                        description: `I was the ${i} poulay you know, like POULAY man. POULAY`,
+                        image: defaultMarkerImage
+                    });
+                };
+                if (window.google && window.google.maps) {
+                    loadMap();
+                }
+            }, 1000);
+        }
+
+        function mapLoadHandler() {
+            delete window.mapLoadHandler;
+            if (stores && stores.length) {
+                loadMap();
+            }
+        }
+
+        function loadMapScript() {
+            window.mapLoadHandler = mapLoadHandler;
+            const el = window.document.createElement("script");
+            el.type = "text/javascript";
+            el.src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1cxIBCzncxDL89MUOtgexZR7wetqW-vo&callback=mapLoadHandler";
+            window.document.body.appendChild(el);
+        }
+
+        function load(){
+            window.removeEventListener("DOMContentLoaded", load);
+            mapContainer = document.getElementById("map");
+            loader = document.getElementById("loader");
+            loadMapScript();
+        }
+        window.addEventListener("DOMContentLoaded", load);
+        getStores();
+    })();
 </script>
