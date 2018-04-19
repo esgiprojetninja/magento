@@ -5,7 +5,7 @@ return array (
     'Magento_Store' => 1,
     'Magento_AdminNotification' => 1,
     'Esgi_Helloworld' => 1,
-    'Esgi_Job' => 1,
+    'Esgi_Ninja' => 1,
     'Esgi_Ninja' => 1,
     'Magento_Directory' => 1,
     'Magento_AdvancedPricingImportExport' => 1,
