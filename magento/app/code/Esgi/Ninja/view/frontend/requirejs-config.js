@@ -1,7 +1,7 @@
-const config = {
+var config = {
     map: {
-        "*": {
-            ninjaStores: "Esgi_Ninja/js/stores-ajax"
+        '*': {
+            storesAjax: 'Esgi_Ninja/js/stores-ajax'
         }
     }
 };
