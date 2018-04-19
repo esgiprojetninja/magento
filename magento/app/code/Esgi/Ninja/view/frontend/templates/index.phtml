@@ -148,7 +148,7 @@
                     <h4 class="title full-width text-left">${store.name || "Default title"}</h4>
                     <p class="description full-width" text-left>${store.description || "Default store description"}</p>
                     <p class="store-link full-width text-left">
-                        <a href="${store.url || "http://adrastia.org/"}>Store link</a>
+                        <a href="${store.url || "http://adrastia.org/"}">Go to store</a>
                     </p<
                 </div>
             `;
@@ -162,6 +162,11 @@
                 zoom: 4,
                 center: { lat, lng }
             });
+            map.addListener("click", () => {
+                if (infoWindow && infoWindow.close) {
+                    infoWindow.close();
+                }
+            })
             stores = stores.map(store => {
                 const { lat, lng } = store;
                 const marker = new google.maps.Marker({
