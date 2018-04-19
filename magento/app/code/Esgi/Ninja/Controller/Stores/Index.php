@@ -22,7 +22,7 @@ class Index extends \Magento\Framework\App\Action\Action
 	public function execute()
 	{
         if (!$this->_http->isAjax()) {
-            throw new NotFoundException(__("Ajax only bitch"));
+            throw new NotFoundException(__("Ajax only homz"));
         }
         $stores = [];
         for ($i = 0; $i < 4; $i++) {
