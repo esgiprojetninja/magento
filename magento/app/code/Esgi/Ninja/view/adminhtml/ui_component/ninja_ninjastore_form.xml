@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">ninja_ninjastore_form.ninjastore_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">General Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save_and_continue" class="Esgi\Ninja\Block\Adminhtml\NinjaStore\Edit\SaveAndContinueButton"/>
+            <button name="save" class="Esgi\Ninja\Block\Adminhtml\NinjaStore\Edit\SaveButton"/>
+            <button name="reset" class="Esgi\Ninja\Block\Adminhtml\NinjaStore\Edit\ResetButton"/>
+            <button name="delete" class="Esgi\Ninja\Block\Adminhtml\NinjaStore\Edit\DeleteButton"/>
+            <button name="back" class="Esgi\Ninja\Block\Adminhtml\NinjaStore\Edit\BackButton"/>
+        </buttons>
+        <namespace>ninja_ninjastore_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>ninja_ninjastore_form.ninjastore_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="ninjastore_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="ninja/ninjastore/save"/>
+        </settings>
+        <dataProvider class="Esgi\Ninja\Model\NinjaStore\DataProvider" name="ninjastore_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="entity_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ninjastore</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>entity_id</dataScope>
+            </settings>
+        </field>
+        <field name="name" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ninjastore</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">NinjaStore's Name</label>
+                <dataScope>name</dataScope>
+            </settings>
+        </field>
+        <field name="content" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ninjastore</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>textarea</dataType>
+                <label translate="true">NinjaStore's Description</label>
+                <dataScope>content</dataScope>
+            </settings>
+        </field>
+        <field name="link" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ninjastore</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-clean-url" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">NinjaStore's Link</label>
+                <dataScope>link</dataScope>
+            </settings>
+        </field>
+        <field name="lat" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ninjastore</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">NinjaStore's Latitude</label>
+                <dataScope>lat</dataScope>
+            </settings>
+        </field>
+        <field name="lng" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ninjastore</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">NinjaStore's Longitude</label>
+                <dataScope>lng</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+</form>

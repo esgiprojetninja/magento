@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Esgi\Ninja\Api\Data\NinjaStoreSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+    <preference for="Esgi\Ninja\Api\Data\NinjaStoreInterface" type="Esgi\Ninja\Model\NinjaStore" />
+    <preference for="Esgi\Ninja\Api\NinjaStoreRepositoryInterface" type="Esgi\Ninja\Model\NinjaStoreRepository" />
+
+    <!-- Create our type NinjaStoreGridDataProvider -->
+    <virtualType name="NinjaStoreGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Esgi\Ninja\Model\ResourceModel\NinjaStore\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">NinjaStoreGridFilterPool</argument> <!-- Define new object for filters -->
+        </arguments>
+    </virtualType>
+
+    <!-- Create our type NinjaStoreGridFilterPool -->
+    <virtualType name="NinjaStoreGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Type for ninja_ninjastore_listing_data_source -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ninja_ninjastore_listing_data_source" xsi:type="string">Esgi\Ninja\Model\ResourceModel\Grid\NinjaStore\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Simulate our class Esgi\Ninja\Model\ResourceModel\Grid\NinjaStore\Collection -->
+    <virtualType name="Esgi\Ninja\Model\ResourceModel\Grid\NinjaStore\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">esgi_ninja_ninjastore</argument>
+            <argument name="resourceModel" xsi:type="string">Esgi\Ninja\Model\ResourceModel\NinjaStore</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Esgi\Ninja\Api\Data\NinjaStoreInterface" xsi:type="string">Esgi\Ninja\Api\NinjaStoreRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

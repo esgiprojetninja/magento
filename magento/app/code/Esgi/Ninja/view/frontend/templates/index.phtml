@@ -147,7 +147,6 @@
         let loader = null;
         let stores = [];
         let storesFetched = false;
-        const defaultMarkerImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
         let map = null;
         let infoWindow = null;
 
@@ -214,7 +213,6 @@
 
         function storesLoaded(e) {
             storesFetched = true;
-            console.log("stores loaaaaddded", e);
             if (e && e.target && e.target.status === 200) {
                 stores = JSON.parse(e.target.response).data.map((store => Object.assign(store, {
                     lat: Number(store.lat),

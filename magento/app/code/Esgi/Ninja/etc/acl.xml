@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+<acl>
+    <resources>
+        <resource id="Magento_Backend::admin">
+            <resource id="Esgi_Ninja::ninja_head" title="Ninjas">
+                <resource id="Esgi_Ninja::ninjastore" title="NinjaStores" translate="title" sortOrder="10">
+                    <resource id="Esgi_Ninja::ninjastore_save" title="Save NinjaStore" translate="title" sortOrder="10" />
+                    <resource id="Esgi_Ninja::ninjastore_delete" title="Delete NinjaStore" translate="title" sortOrder="20" />
+                </resource>
+                <resource id="Esgi_Ninja::ninja" title="Ninjas" translate="title" sortOrder="10">
+                    <resource id="Esgi_Ninja::ninja_save" title="Save Ninja" translate="title" sortOrder="10" />
+                    <resource id="Esgi_Ninja::ninja_delete" title="Delete Ninja" translate="title" sortOrder="20" />
+                </resource>
+            </resource>
+        </resource>
+    </resources>
+</acl>
+</config>

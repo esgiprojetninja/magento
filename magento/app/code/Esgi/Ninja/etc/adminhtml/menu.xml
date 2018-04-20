@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- app/code/Esgi/Ninja/etc/adminhtml/menu.xml -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Esgi_Ninja::ninja_head" title="Ninjas" module="Esgi_Ninja" sortOrder="100" resource="Esgi_Ninja::ninja_head" />
+        <add id="Esgi_Ninja::ninjastore" title="NinjaStores" module="Esgi_Ninja" sortOrder="10" parent="Esgi_Ninja::ninja_head" action="ninja/ninjastore" resource="Esgi_Ninja::ninja" />
+        <!-- <add id="Esgi_Ninja::ninja" title="Ninjas" module="Esgi_Ninja" sortOrder="20" parent="Esgi_Ninja::ninja_head" action="ninja/ninja" resource="Esgi_Ninja::ninja" /> -->
+    </menu>
+</config>
