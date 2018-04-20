@@ -103,7 +103,6 @@ atlassian*
 /.grunt
 
 # Magento
-magento/app
 magento/bin
 magento/dev
 magento/lib
